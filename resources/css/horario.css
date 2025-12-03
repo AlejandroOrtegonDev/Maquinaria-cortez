@@ -1,0 +1,391 @@
+:root {
+  --border-color: #d1d5db;
+  --header-bg: #f3f4f6;
+  --today-bg: #2563eb;
+  --today-text: #ffffff;
+  --text-primary: #1f2937;
+  --text-muted: #6b7280;
+  --surface: #ffffff;
+}
+
+body {
+  background: #f8fafc;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.calendar-container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 2rem 2.5rem;
+  background: var(--surface);
+  border-radius: 1.5rem;
+  box-shadow: 0 25px 45px -35px rgba(15, 23, 42, 0.35);
+  position: relative;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.controls button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.65rem;
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  color: var(--today-bg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.controls button:hover {
+  background: rgba(37, 99, 235, 0.2);
+  transform: translateY(-1px);
+}
+
+.week-range {
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: capitalize;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.schedule-table thead th {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.85rem 0.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.schedule-table thead th.time-head {
+  text-align: left;
+  padding-left: 1rem;
+  width: 7.5rem;
+  font-size: 0.9rem;
+}
+
+.schedule-table tbody td {
+  height: 92px;
+  border: 1px solid var(--border-color);
+  background: var(--surface);
+  transition: background 0.15s ease;
+  cursor: pointer;
+}
+
+.schedule-table tbody td.time-cell {
+  background: var(--header-bg);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: left;
+  padding-left: 1rem;
+  padding-right: 0.5rem;
+  width: 7.5rem;
+  cursor: default;
+}
+
+.time-label {
+  display: block;
+  letter-spacing: 0.03em;
+}
+
+.schedule-table tbody td:hover {
+  background: rgba(37, 99, 235, 0.08);
+}
+
+.schedule-table tbody td.selected {
+  background: rgba(37, 99, 235, 0.18);
+  box-shadow: inset 0 0 0 2px rgba(37, 99, 235, 0.35);
+}
+
+.schedule-table tbody td.reserved {
+  background: rgba(59, 130, 246, 0.18);
+  box-shadow: inset 0 0 0 2px rgba(37, 99, 235, 0.45);
+  cursor: not-allowed;
+  position: relative;
+}
+
+.schedule-table tbody td.reserved::after {
+  content: "Reservado";
+  position: absolute;
+  inset: auto 12px 12px auto;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(15, 23, 42, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.schedule-table tbody td.selected:hover {
+  background: rgba(37, 99, 235, 0.22);
+}
+
+.day-name {
+  display: block;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.day-number {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 0.15rem;
+}
+
+.schedule-table thead th.today {
+  background: rgba(37, 99, 235, 0.15);
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--today-bg);
+}
+
+.schedule-table thead th.today .day-name,
+.schedule-table thead th.today .day-number {
+  color: var(--today-bg);
+}
+
+.schedule-table thead th.blocked,
+.schedule-table tbody td.blocked {
+  background: rgba(148, 163, 184, 0.25);
+  color: var(--text-muted);
+  position: relative;
+}
+
+.schedule-table tbody td.blocked::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(148, 163, 184, 0.35),
+    rgba(148, 163, 184, 0.35) 6px,
+    rgba(148, 163, 184, 0.2) 6px,
+    rgba(148, 163, 184, 0.2) 12px
+  );
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.cell.today {
+  background: var(--surface);
+  color: inherit;
+}
+
+@media (max-width: 900px) {
+  .controls {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .calendar-container {
+    margin: 1.5rem auto;
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+  }
+
+  .title {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .controls {
+    gap: 0.6rem;
+  }
+
+  .controls button {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .week-range {
+    font-size: 0.95rem;
+  }
+
+  .calendar-container::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 18px;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff 65%);
+  }
+
+  .calendar-scroll {
+    position: relative;
+    margin: 0 -1.25rem;
+    padding: 0 1.25rem 1rem;
+  }
+
+  .calendar-scroll::before,
+  .calendar-scroll::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 1rem;
+    width: 18px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .calendar-scroll::before {
+    left: 0;
+    background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0));
+  }
+
+  .calendar-scroll::after {
+    right: 0;
+    background: linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0));
+  }
+}
+
+@media (max-width: 540px) {
+  .calendar-container {
+    padding: 1.25rem 1rem;
+    margin: 1rem;
+  }
+
+  .controls button {
+    max-width: none;
+    font-size: 0.9rem;
+  }
+
+  .week-range {
+    font-size: 0.9rem;
+  }
+
+  .schedule-table thead th {
+    padding: 0.75rem 0.4rem;
+    font-size: 0.75rem;
+  }
+
+  .day-name {
+    font-size: 0.7rem;
+  }
+
+  .day-number {
+    font-size: 1rem;
+  }
+
+  .schedule-table tbody td {
+    height: 64px;
+  }
+}
+/* ---------------------- */
+/*     MODO MÓVIL REAL    */
+/* ---------------------- */
+@media (max-width: 620px) {
+  .calendar-container {
+    width: 100%;
+    margin: 1rem auto;
+    padding: 1rem 0.85rem;
+    border-radius: 1rem;
+  }
+
+  .calendar-container::after {
+    display: none;
+  }
+
+  .title,
+  .week-range {
+    text-align: center;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .controls button {
+    width: 100%;
+    max-width: 320px;
+    padding: 0.55rem;
+    font-size: 0.88rem;
+  }
+
+  .calendar-scroll {
+    margin: 0;
+    padding: 0 0 1rem;
+  }
+
+  .schedule-table {
+    width: 100%;
+    max-width: 100%;
+    table-layout: fixed;
+    border-radius: 0.85rem;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1px rgba(209, 213, 219, 0.35);
+  }
+
+  .schedule-table thead th,
+  .schedule-table tbody td {
+    padding: 0.45rem 0.2rem;
+    word-break: break-word;
+  }
+
+  .schedule-table thead th {
+    font-size: 0.68rem;
+    line-height: 1.15;
+  }
+
+  .schedule-table thead th.time-head {
+    padding-left: 0.65rem;
+    font-size: 0.72rem;
+    width: 4.5rem;
+  }
+
+  .day-name {
+    font-size: 0.6rem;
+    letter-spacing: 0.01em;
+    white-space: normal;
+  }
+
+  .day-number {
+    font-size: 0.86rem;
+    margin-top: 0.1rem;
+  }
+
+  .schedule-table tbody td {
+    height: 72px;
+  }
+
+  .schedule-table tbody td.time-cell {
+    padding-left: 0.65rem;
+    font-size: 0.72rem;
+    width: 4.5rem;
+    cursor: default;
+  }
+
+  .time-label {
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+}
