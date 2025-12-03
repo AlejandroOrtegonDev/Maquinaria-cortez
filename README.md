@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # wevb-repositorio-maquinaria-cortez
 Pagina de maquinaria 
 =======
@@ -67,3 +68,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 Pagina de maquinaria 
 >>>>>>> b3f7abaa5220804dd55be44b057710271a5ab9fe
 >>>>>>> bdcf18a (Primer commit del proyecto Maquinaria Cortes)
+=======
+# Maquinaria-cortez
+Pagina de maquinaria 
+>>>>>>> 13b30f4b584d0e35f5848d227760b2a7cad3b9fe
